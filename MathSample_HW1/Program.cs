@@ -33,6 +33,10 @@
  * 
  * Parse returns an exception and TryParse returns false.
  * 
+ * https://msdn.microsoft.com/en-us/library/ms229597(v=vs.110).aspx
+ * 
+ * 
+ * 
  * 
  */
 
@@ -61,11 +65,33 @@ namespace MathSample_HW1
     // Note: PClass1.Polygon requires area() in children classes to not be overriden
     // using Polygon = PClass2.Polygon<double>; // Contains virtual area()
     // using Polygon = PClass3.Polygon;      // Abstract (Pure virtual in C++) implementation
-    class Program
+    class Program : Form
     {
-
-        static void Main()// string[] args)
+        public Button button1;  // declaring a button control
+        public Program()  // creating button
         {
+            button1 = new Button();
+            button1.Size = new Size(40, 40);
+            button1.Location = new Point(30, 30);
+            button1.Text = "Click me";
+            this.Controls.Add(button1);
+            button1.Click += new EventHandler(button1_Click);
+
+        }
+
+        private void button1_Click(object sender, EventArgs e) // Click event handler
+        {
+            MessageBox.Show("Hello World");
+        }
+
+
+
+        [STAThread]
+        static void Main() 
+        {
+            Application.EnableVisualStyles();
+            Application.Run(new Program());
+
             var w = Console.ReadLine();
             var h = Console.ReadLine();
             decimal width = 0;
