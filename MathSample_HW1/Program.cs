@@ -31,6 +31,8 @@
  * 
  * [1] http://www.codeproject.com/Articles/992340/Generic-Math-in-Csharp-Using-Runtime-Compilation
  * 
+ * Parse returns an exception and TryParse returns false.
+ * 
  * 
  */
 
@@ -41,11 +43,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.CodeDom.Compiler; // CompilerParameters, GenerateInMemory
-using Microsoft.CSharp; // CSharpCodeProvider
-using System.Reflection; // MethodInfo
+using Microsoft.CSharp;        // CSharpCodeProvider
+using System.Reflection;       // MethodInfo
+
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 
 //using PClass1;
- using PClass2;
+using PClass2;
 // using PClass3;
 
 namespace MathSample_HW1
@@ -58,13 +64,26 @@ namespace MathSample_HW1
     class Program
     {
 
-        static void Main(string[] args)
+        static void Main()// string[] args)
         {
+            var w = Console.ReadLine();
+            var h = Console.ReadLine();
+            decimal width = 0;
+            decimal height = 0;
+            if (!decimal.TryParse(w, out width))
+            {
+                Console.WriteLine("Input is no good");
+            }
+
+            if(!decimal.TryParse(h, out height))
+            {
+                Console.WriteLine("Height aint decimal");
+            }
             // Note that the base member data, which are "predefined" types, are implicitly initialized to 0
-            Square<double> square = new Square<double>();
+            Square<decimal> square = new Square<decimal>();
             // Triangle triangle = new Triangle();
-            square.width = 4;
-            square.height = 4;
+            square.width = width;
+            square.height = height;
             // triangle.width = 4;
             // triangle.height = 4;
             Console.WriteLine("Square area: {0}", square.area());
