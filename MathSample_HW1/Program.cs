@@ -68,21 +68,48 @@ namespace MathSample_HW1
     // using Polygon = PClass3.Polygon;      // Abstract (Pure virtual in C++) implementation
     class Program : Form
     {
-        public Button button1;  // declaring a button control
+        public Button GetArea_button; 
+        public TextBox WidthInputBox;
+        public TextBox HeightInputBox;
+        public TextBox ResultBox;
         public Program()  // creating button
         {
-            button1 = new Button();
-            button1.Size = new Size(40, 40);
-            button1.Location = new Point(30, 30);
-            button1.Text = "Click me";
-            this.Controls.Add(button1);
-            button1.Click += new EventHandler(button1_Click);
+            this.BackColor = Color.SeaGreen;
+            GetArea_button = new Button();
+            GetArea_button.Size = new Size(110, 40);
+            GetArea_button.Location = new Point(30, 110);
+            GetArea_button.Text = "Calculate Area";
+            GetArea_button.BackColor = Color.Silver;
+            GetArea_button.Font = new Font(GetArea_button.Font, FontStyle.Bold);
+            this.Controls.Add(GetArea_button);
+            GetArea_button.Click += new EventHandler(GetArea_Click);
+
+            WidthInputBox = new TextBox();
+            WidthInputBox.Size = new Size(100, 25);
+            WidthInputBox.Location = new Point(30, 30);
+            this.Controls.Add(WidthInputBox);
+            WidthInputBox.Text = "Enter width";
+
+            HeightInputBox = new TextBox();
+            HeightInputBox.Size = new Size(100, 25);
+            HeightInputBox.Location = new Point(30, 60);
+            this.Controls.Add(HeightInputBox);
+            HeightInputBox.Text = "Enter height";
 
         }
 
-        private void button1_Click(object sender, EventArgs e) // Click event handler
+        private void GetArea_Click(object sender, EventArgs e) // This event handler is created at runtime
         {
-            MessageBox.Show("Hello World");
+            Square<decimal> square = new Square<decimal>();
+            ResultBox = new TextBox();
+            ResultBox.Location = new Point(30, 150);
+            this.Controls.Add(ResultBox);
+            decimal width, height;
+            decimal.TryParse(WidthInputBox.Text, out width);
+            decimal.TryParse(HeightInputBox.Text, out height);
+            square.width = width;
+            square.height = height;
+            ResultBox.Text = square.area().ToString();
         }
 
 
@@ -108,7 +135,7 @@ namespace MathSample_HW1
             }
             */
             // Note that the base member data, which are "predefined" types, are implicitly initialized to 0
-            Square<decimal> square = new Square<decimal>();
+            // Square<decimal> square = new Square<decimal>();
             // Triangle triangle = new Triangle();
             /*
             square.width = width;
