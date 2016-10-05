@@ -35,7 +35,8 @@
  * 
  * https://msdn.microsoft.com/en-us/library/ms229597(v=vs.110).aspx
  * 
- * 
+ * Running the program below via CMD (csc Program.cs, Program.exe) will only display the windows form. If
+ * it is run and built here in VS, a console window will open along with the windows form.
  * 
  * 
  */
@@ -91,7 +92,7 @@ namespace MathSample_HW1
         {
             Application.EnableVisualStyles();
             Application.Run(new Program());
-
+            /*
             var w = Console.ReadLine();
             var h = Console.ReadLine();
             decimal width = 0;
@@ -105,16 +106,18 @@ namespace MathSample_HW1
             {
                 Console.WriteLine("Height aint decimal");
             }
+            */
             // Note that the base member data, which are "predefined" types, are implicitly initialized to 0
             Square<decimal> square = new Square<decimal>();
             // Triangle triangle = new Triangle();
+            /*
             square.width = width;
             square.height = height;
             // triangle.width = 4;
             // triangle.height = 4;
             Console.WriteLine("Square area: {0}", square.area());
             // Console.WriteLine("Triangle area: {0}", triangle.area());
-
+            */
             // Example of polymorphism
             // Notice how the Polygon objects can't access it's children's (derived class') member data (area() in this case).
             // These declarations of Polygon objects do not call the Polygon constructor. Also, this type of declaration is
