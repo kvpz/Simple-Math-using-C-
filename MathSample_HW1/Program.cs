@@ -20,113 +20,188 @@
  * "sealed" modifier prevents a class from being inherited
  * 
  * C# does not allow deterministic disposition of objects, etc. hench managed data.
- */ 
+ * 
+ * Using delegates, the library can be altered at runtime.
+ * 
+ * Delegates are used to pass methods as arguments to other methods. Compare this to C function pointers.
+ * 
+ * The ref and out keywords cause different run-time behavior and they are not considered part of the
+ * method signature at compile time. Thus methods cannot be overloaded if the difference only has to do
+ * with the inclusion/ exclusion of these keywords.
+ * 
+ * [1] http://www.codeproject.com/Articles/992340/Generic-Math-in-Csharp-Using-Runtime-Compilation
+ * 
+ * 
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//using P1;
+using System.CodeDom.Compiler; // CompilerParameters, GenerateInMemory
+using Microsoft.CSharp; // CSharpCodeProvider
+using System.Reflection; // MethodInfo
+
+//using PClass1;
+ using PClass2;
+// using PClass3;
 
 namespace MathSample_HW1
 {
-    // aliases (can also be declared in global namespace)
-    // Note: P1.Polygon requires area() in children classes to not be overriden
-    // using Polygon = P1.Polygon; // regular class without polymorphism technics
-    // using Polygon = P2.Polygon; // Contains virtual area()
-    using Polygon = P3.Polygon; // Abstract (Pure virtual in C++) implementation
+    // using PClass2;
+    // aliases (can also be declared in global namespace). Closest thing to C++ typedef
+    // Note: PClass1.Polygon requires area() in children classes to not be overriden
+    // using Polygon = PClass2.Polygon<double>; // Contains virtual area()
+    // using Polygon = PClass3.Polygon;      // Abstract (Pure virtual in C++) implementation
     class Program
     {
+
         static void Main(string[] args)
         {
-            
             // Note that the base member data, which are "predefined" types, are implicitly initialized to 0
-            Square square = new Square(); 
-            Triangle triangle = new Triangle();
+            Square<double> square = new Square<double>();
+            // Triangle triangle = new Triangle();
             square.width = 4;
             square.height = 4;
-            triangle.width = 4;
-            triangle.height = 4;
+            // triangle.width = 4;
+            // triangle.height = 4;
             Console.WriteLine("Square area: {0}", square.area());
-            Console.WriteLine("Triangle area: {0}", triangle.area());
+            // Console.WriteLine("Triangle area: {0}", triangle.area());
 
             // Example of polymorphism
             // Notice how the Polygon objects can't access it's children's (derived class') member data (area() in this case).
             // These declarations of Polygon objects do not call the Polygon constructor. Also, this type of declaration is
             //      mandatory if Polygon is an abstract class, else "Polygon poly = new Polygon();" would result in an error.
-            Polygon poly_square = square;
-            Polygon poly_triangle = triangle;
-            Console.WriteLine("Poly_square area: {0}", poly_square.width * poly_square.height);
-            Console.WriteLine("Poly_triangle area: {0}", poly_triangle.width * poly_triangle.height * 1/2);
+            // Polygon poly_square = square;
+            // Polygon poly_triangle = triangle;
+            // Console.WriteLine("Poly_square area: {0}", poly_square.width * poly_square.height);
+            // Console.WriteLine("Poly_triangle area: {0}", poly_triangle.width * poly_triangle.height * 1 / 2);
 
             // When 'override' modifier is applied to area() in the derived classes. Otherwise, the statements below would return 0.
-            Console.WriteLine("Poly_square area (using virtual method): {0}", poly_square.area());
-            Console.WriteLine("Poly_square area (using virtual method): {0}", poly_triangle.area()); 
+            // Console.WriteLine("Poly_square area (using virtual method): {0}", poly_square.area());
+            // Console.WriteLine("Poly_square area (using virtual method): {0}", poly_triangle.area());
 
-            
+
 
         }
     }
-    
-    public class Square : Polygon
+
+    public class Square<T> : Polygon<T>
     {
         public Square() { }
-        public override double area()
+        public override T area()
         {
-            return width * height;
+            return Generic_Math<T>.Product(new T[] { width, height });
         }
     }
-
+    /*
     public class Triangle : Polygon
     {
-        public override double area()
+        public override T area()
         {
-            return 0.5 * width * height;
+            return (T)Convert.ChangeType(0.5 * width * height, typeof(T));
         }
     }
-    
-}
+    */
 
-// Contains a regular public class Polygon
-namespace P1
-{
-    public class Polygon
+    public static class Generic_Math<T>   // see top comment [1]
     {
-        public uint width { get; set; }
-        public uint height { get; set; }
-        public Polygon()
+        public static Func<T[], T> Sum = (T[] array) =>
         {
-            width = 0;
-            height = 0;
-        }
+            string code = "(System.Func<NUMBER[], NUMBER>)((NUMBER[] array) => { NUMBER sum = 0; for (int i = 0; i < array.Length; i++) sum += array[i]; return sum; })";
+            code = code.Replace("NUMBER", typeof(T).ToString());
+            Generic_Math<T>.Sum = Generate.Object< Func<T[], T> >(new string[] { }, new string[] { }, code);
+            return Generic_Math<T>.Sum(array);
+        };
 
-        public Polygon(uint w, uint h)
+        public static Func<T[], T> Product = (T[] array) =>
         {
-            width = w;
-            height = h;
+            string code = "(System.Func<NUMBER[], NUMBER>)((NUMBER[] array) => { NUMBER product = 1; for (int i = 0; i < array.Length; i++) product *= array[i]; return product; })";
+            code = code.Replace("NUMBER", typeof(T).ToString());
+            Generic_Math<T>.Product = Generate.Object< Func<T[], T> >(new string[] { }, new string[] { }, code);
+            return Generic_Math<T>.Product(array);
+        };
+    }
+
+    internal static class Generate  // see top comment [1]
+    {
+        internal static T Object<T>(string[] references, string[] name_spaces, string code)
+        {
+            string full_code = string.Empty;
+            if (name_spaces != null)
+                for (int i = 0; i < name_spaces.Length; i++)
+                    full_code += "using " + name_spaces[i] + ";";
+
+            full_code += "namespace Seven.Generated {";
+            full_code += "public class Generator {";
+            full_code += "public static object Generate() { return " + code + "; } } }";
+
+            CompilerParameters parameters = new CompilerParameters();
+            foreach (string reference in references)
+                parameters.ReferencedAssemblies.Add(reference);
+
+            parameters.GenerateInMemory = true;
+            Console.WriteLine(full_code);
+            CompilerResults results = new CSharpCodeProvider().CompileAssemblyFromSource(parameters, full_code);
+
+            if(results.Errors.HasErrors)
+            {
+                Console.WriteLine("In if(results.Errors.HasErrors");
+                string error = string.Empty;
+                foreach (CompilerError compiler_error in results.Errors)
+                    error += compiler_error.ErrorText.ToString() + "\n";
+
+                throw new Exception(error);
+            }
+            
+            MethodInfo generate = results.CompiledAssembly.GetType("Seven.Generated.Generator").GetMethod("Generate");
+
+            return (T)generate.Invoke(null, null);
         }
     }
 }
 
 // Contains class Polygon with a virtual function
-namespace P2
+namespace PClass2
 {
-    public class Polygon
+    public class Polygon<T>
     {
-        public uint width { get; set; }
-        public uint height { get; set; }
+        private T _width;
+        private T _height;
 
-        //public virtual double area() { return 0; } // if inheriting classes have their own definition
-        public virtual double area() { return 0; }
-        public Polygon()
+        public T width {
+            get
+            {
+                return _width;
+            }
+            set
+            {
+                _width = value;
+            }
+        }
+        public T height
         {
-            Console.WriteLine("In Polygon Constructor");
-            width = 0;
-            height = 0;
+            get
+            {
+                return _height;
+            }
+            set
+            {
+                _height = value;
+            }
         }
 
-        public Polygon(uint w, uint h)
+        //public virtual double area() { return 0; } // if inheriting classes have their own definition
+        public virtual T area() { return (T)Convert.ChangeType(0, typeof(T)); }
+        public Polygon()
+        {
+            // width = 0;
+            // height = 0;
+        }
+
+        public Polygon(T w, T h)
         {
             width = w;
             height = h;
@@ -135,7 +210,7 @@ namespace P2
 }
 
 // Contains an abstract Polygon class
-namespace P3
+namespace PClass3
 {
     public abstract class Polygon
     {
