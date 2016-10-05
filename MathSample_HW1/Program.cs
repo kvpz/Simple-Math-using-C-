@@ -72,9 +72,17 @@ namespace MathSample_HW1
         public TextBox WidthInputBox;
         public TextBox HeightInputBox;
         public TextBox ResultBox;
+        public Label Title;
         public Program()  // creating button
         {
             this.BackColor = Color.SeaGreen;
+            Title = new Label();
+            Title.Size = new Size(300, 25);
+            Title.Location = new Point(30, 2);
+            Title.Text = "Calculate area of a square";
+            Title.Font = new Font(Title.Font, FontStyle.Bold);
+            this.Controls.Add(Title);
+
             GetArea_button = new Button();
             GetArea_button.Size = new Size(110, 40);
             GetArea_button.Location = new Point(30, 110);
@@ -101,45 +109,43 @@ namespace MathSample_HW1
         private void GetArea_Click(object sender, EventArgs e) // This event handler is created at runtime
         {
             Square<decimal> square = new Square<decimal>();
-            ResultBox = new TextBox();
-            ResultBox.Location = new Point(30, 150);
-            this.Controls.Add(ResultBox);
+            // check if null because else no new calculations will be displayed
+            if (ResultBox == null)
+            {
+                ResultBox = new TextBox();
+                ResultBox.Location = new Point(30, 150);
+                this.Controls.Add(ResultBox);
+            }
+            ResultBox.ForeColor = Color.Black;
             decimal width, height;
-            decimal.TryParse(WidthInputBox.Text, out width);
-            decimal.TryParse(HeightInputBox.Text, out height);
-            square.width = width;
-            square.height = height;
-            ResultBox.Text = square.area().ToString();
+            bool wIsNumeric, hIsNumeric;
+            wIsNumeric = decimal.TryParse(WidthInputBox.Text, out width);
+            hIsNumeric = decimal.TryParse(HeightInputBox.Text, out height);
+            if (width <= 0 || height <= 0 || !wIsNumeric || !hIsNumeric)
+            {
+                ResultBox.Text = "Invalid input";
+                ResultBox.ForeColor = Color.Red;
+            }
+            else
+            {
+                square.width = width;
+                square.height = height;
+                ResultBox.Text = square.area().ToString();
+            }
         }
-
-
 
         [STAThread]
         static void Main() 
         {
             Application.EnableVisualStyles();
             Application.Run(new Program());
-            /*
-            var w = Console.ReadLine();
-            var h = Console.ReadLine();
-            decimal width = 0;
-            decimal height = 0;
-            if (!decimal.TryParse(w, out width))
-            {
-                Console.WriteLine("Input is no good");
-            }
-
-            if(!decimal.TryParse(h, out height))
-            {
-                Console.WriteLine("Height aint decimal");
-            }
-            */
+            
             // Note that the base member data, which are "predefined" types, are implicitly initialized to 0
             // Square<decimal> square = new Square<decimal>();
             // Triangle triangle = new Triangle();
             /*
-            square.width = width;
-            square.height = height;
+            square.width = 4;
+            square.height = 4;
             // triangle.width = 4;
             // triangle.height = 4;
             Console.WriteLine("Square area: {0}", square.area());
@@ -157,9 +163,6 @@ namespace MathSample_HW1
             // When 'override' modifier is applied to area() in the derived classes. Otherwise, the statements below would return 0.
             // Console.WriteLine("Poly_square area (using virtual method): {0}", poly_square.area());
             // Console.WriteLine("Poly_square area (using virtual method): {0}", poly_triangle.area());
-
-
-
         }
     }
 
@@ -171,15 +174,15 @@ namespace MathSample_HW1
             return Generic_Math<T>.Product(new T[] { width, height });
         }
     }
-    /*
-    public class Triangle : Polygon
+    
+    public class Triangle<T> : Polygon<T>
     {
         public override T area()
         {
-            return (T)Convert.ChangeType(0.5 * width * height, typeof(T));
+            return Generic_Math<T>.Product(new T[] { (T)Convert.ChangeType(0.5, typeof(T)), width, height });
         }
     }
-    */
+    
 
     public static class Generic_Math<T>   // see top comment [1]
     {
@@ -268,7 +271,6 @@ namespace PClass2
             }
         }
 
-        //public virtual double area() { return 0; } // if inheriting classes have their own definition
         public virtual T area() { return (T)Convert.ChangeType(0, typeof(T)); }
         public Polygon()
         {
