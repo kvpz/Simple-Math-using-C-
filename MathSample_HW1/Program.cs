@@ -56,7 +56,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-//using PClass1;
 using PClass2;
 // using PClass3;
 
@@ -67,22 +66,51 @@ namespace MathSample_HW1
     // Note: PClass1.Polygon requires area() in children classes to not be overriden
     // using Polygon = PClass2.Polygon<double>; // Contains virtual area()
     // using Polygon = PClass3.Polygon;      // Abstract (Pure virtual in C++) implementation
-    class Program : Form
+    class Program 
     {
+        /*
+        public TabControl tabForms;
         public Button GetArea_button; 
         public TextBox WidthInputBox;
         public TextBox HeightInputBox;
         public TextBox ResultBox;
         public Label Title;
+        */
         public Program()  // creating button
         {
+            Console.WriteLine("In Program() Constructor");
+            /*
+            tabForms = new TabControl();
+            if (this.ActiveMdiChild == null)
+            {
+                tabForms.Visible = false;
+            }
+            else
+            {
+                this.ActiveMdiChild.WindowState = FormWindowState.Maximized;
+                if(this.ActiveMdiChild.Tag == null)
+                {
+                    // Add a tab page to tab control with child form caption
+                    TabPage tp = new TabPage(this.ActiveMdiChild.Text);
+                    tp.Tag = this.ActiveMdiChild;
+                    tp.Parent = tabForms;
+                    tabForms.SelectedTab = tp;
+
+                    this.ActiveMdiChild.Tag = tp;
+                    //this.ActiveMdiChild.FormClosed += new FormClosedEventHandler( ((sender as Form).Tag as TabPage).Ta );
+                }
+            }
+            
+            if (!tabForms.Visible) tabForms.Visible = true;
+
+
             this.BackColor = Color.SeaGreen;
             Title = new Label();
             Title.Size = new Size(300, 25);
             Title.Location = new Point(30, 2);
             Title.Text = "Calculate area of a square";
             Title.Font = new Font(Title.Font, FontStyle.Bold);
-            this.Controls.Add(Title);
+            // this.Controls.Add(Title);
 
             GetArea_button = new Button();
             GetArea_button.Size = new Size(110, 40);
@@ -90,23 +118,26 @@ namespace MathSample_HW1
             GetArea_button.Text = "Calculate Area";
             GetArea_button.BackColor = Color.Silver;
             GetArea_button.Font = new Font(GetArea_button.Font, FontStyle.Bold);
-            this.Controls.Add(GetArea_button);
+            // this.Controls.Add(GetArea_button);
             GetArea_button.Click += new EventHandler(GetArea_Click);
 
             WidthInputBox = new TextBox();
             WidthInputBox.Size = new Size(100, 25);
             WidthInputBox.Location = new Point(30, 30);
-            this.Controls.Add(WidthInputBox);
+            // this.Controls.Add(WidthInputBox);
             WidthInputBox.Text = "Enter width";
 
             HeightInputBox = new TextBox();
             HeightInputBox.Size = new Size(100, 25);
             HeightInputBox.Location = new Point(30, 60);
-            this.Controls.Add(HeightInputBox);
+            // this.Controls.Add(HeightInputBox);
             HeightInputBox.Text = "Enter height";
 
+           
+            */
         }
 
+        /*
         private void GetArea_Click(object sender, EventArgs e) // This event handler is created at runtime
         {
             Square<decimal> square = new Square<decimal>();
@@ -134,38 +165,15 @@ namespace MathSample_HW1
                 ResultBox.Text = square.area().ToString();
             }
         }
-
+        */
         [STAThread]
         static void Main() 
         {
             Application.EnableVisualStyles();
-            Application.Run(new Program());
-            
-            // Note that the base member data, which are "predefined" types, are implicitly initialized to 0
-            // Square<decimal> square = new Square<decimal>();
-            // Triangle triangle = new Triangle();
-            /*
-            square.width = 4;
-            square.height = 4;
-            // triangle.width = 4;
-            // triangle.height = 4;
-            Console.WriteLine("Square area: {0}", square.area());
-            // Console.WriteLine("Triangle area: {0}", triangle.area());
-            */
-            // Example of polymorphism
-            // Notice how the Polygon objects can't access it's children's (derived class') member data (area() in this case).
-            // These declarations of Polygon objects do not call the Polygon constructor. Also, this type of declaration is
-            //      mandatory if Polygon is an abstract class, else "Polygon poly = new Polygon();" would result in an error.
-            // Polygon poly_square = square;
-            // Polygon poly_triangle = triangle;
-            // Console.WriteLine("Poly_square area: {0}", poly_square.width * poly_square.height);
-            // Console.WriteLine("Poly_triangle area: {0}", poly_triangle.width * poly_triangle.height * 1 / 2);
-
-            // When 'override' modifier is applied to area() in the derived classes. Otherwise, the statements below would return 0.
-            // Console.WriteLine("Poly_square area (using virtual method): {0}", poly_square.area());
-            // Console.WriteLine("Poly_square area (using virtual method): {0}", poly_triangle.area());
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new FormMath()); //Program());
         }
-    }
+    } // class Program
 
     public class Square<T> : Polygon<T>
     {
@@ -183,8 +191,7 @@ namespace MathSample_HW1
             return Generic_Math<T>.Product(new T[] { (T)Convert.ChangeType(0.5, typeof(T)), width, height });
         }
     }
-    
-
+   
     public static class Generic_Math<T>   // see top comment [1]
     {
         public static Func<T[], T> Sum = (T[] array) =>
