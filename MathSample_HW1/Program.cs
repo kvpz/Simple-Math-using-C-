@@ -68,75 +68,14 @@ namespace MathSample_HW1
     // Note: PClass1.Polygon requires area() in children classes to not be overriden
     // using Polygon = PClass2.Polygon<double>; // Contains virtual area()
     // using Polygon = PClass3.Polygon;      // Abstract (Pure virtual in C++) implementation
+
     class Program 
     {
-        /*
-        public TabControl tabForms;
-        public Button GetArea_button; 
-        public TextBox WidthInputBox;
-        public TextBox HeightInputBox;
-        public TextBox ResultBox;
-        public Label Title;
-        */
+
         public Program()  // creating button
         {
             Console.WriteLine("In Program() Constructor");
-            /*
-            tabForms = new TabControl();
-            if (this.ActiveMdiChild == null)
-            {
-                tabForms.Visible = false;
-            }
-            else
-            {
-                this.ActiveMdiChild.WindowState = FormWindowState.Maximized;
-                if(this.ActiveMdiChild.Tag == null)
-                {
-                    // Add a tab page to tab control with child form caption
-                    TabPage tp = new TabPage(this.ActiveMdiChild.Text);
-                    tp.Tag = this.ActiveMdiChild;
-                    tp.Parent = tabForms;
-                    tabForms.SelectedTab = tp;
 
-                    this.ActiveMdiChild.Tag = tp;
-                    //this.ActiveMdiChild.FormClosed += new FormClosedEventHandler( ((sender as Form).Tag as TabPage).Ta );
-                }
-            }
-            
-            if (!tabForms.Visible) tabForms.Visible = true;
-
-
-            this.BackColor = Color.SeaGreen;
-            Title = new Label();
-            Title.Size = new Size(300, 25);
-            Title.Location = new Point(30, 2);
-            Title.Text = "Calculate area of a square";
-            Title.Font = new Font(Title.Font, FontStyle.Bold);
-            // this.Controls.Add(Title);
-
-            GetArea_button = new Button();
-            GetArea_button.Size = new Size(110, 40);
-            GetArea_button.Location = new Point(30, 110);
-            GetArea_button.Text = "Calculate Area";
-            GetArea_button.BackColor = Color.Silver;
-            GetArea_button.Font = new Font(GetArea_button.Font, FontStyle.Bold);
-            // this.Controls.Add(GetArea_button);
-            GetArea_button.Click += new EventHandler(GetArea_Click);
-
-            WidthInputBox = new TextBox();
-            WidthInputBox.Size = new Size(100, 25);
-            WidthInputBox.Location = new Point(30, 30);
-            // this.Controls.Add(WidthInputBox);
-            WidthInputBox.Text = "Enter width";
-
-            HeightInputBox = new TextBox();
-            HeightInputBox.Size = new Size(100, 25);
-            HeightInputBox.Location = new Point(30, 60);
-            // this.Controls.Add(HeightInputBox);
-            HeightInputBox.Text = "Enter height";
-
-           
-            */
         }
 
         /*
@@ -168,6 +107,7 @@ namespace MathSample_HW1
             }
         }
         */
+
         [STAThread]
         static void Main() 
         {

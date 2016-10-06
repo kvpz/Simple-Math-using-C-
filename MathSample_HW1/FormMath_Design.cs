@@ -39,8 +39,8 @@ namespace MathSample_HW1
             this.avgTextBox = new System.Windows.Forms.TextBox();
             this.minTextBox = new System.Windows.Forms.TextBox();
             this.maxTextBox = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.GetAverage = new System.Windows.Forms.Button();
+            this.GetMinValue = new System.Windows.Forms.Button();
             this.getMaxButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.numListTextBox = new System.Windows.Forms.TextBox();
@@ -183,8 +183,8 @@ namespace MathSample_HW1
             this.MiscFunctions.Controls.Add(this.avgTextBox);
             this.MiscFunctions.Controls.Add(this.minTextBox);
             this.MiscFunctions.Controls.Add(this.maxTextBox);
-            this.MiscFunctions.Controls.Add(this.button3);
-            this.MiscFunctions.Controls.Add(this.button2);
+            this.MiscFunctions.Controls.Add(this.GetAverage);
+            this.MiscFunctions.Controls.Add(this.GetMinValue);
             this.MiscFunctions.Controls.Add(this.getMaxButton);
             this.MiscFunctions.Controls.Add(this.label4);
             this.MiscFunctions.Controls.Add(this.numListTextBox);
@@ -217,23 +217,25 @@ namespace MathSample_HW1
             this.maxTextBox.Size = new System.Drawing.Size(122, 20);
             this.maxTextBox.TabIndex = 5;
             // 
-            // button3
+            // GetAverage
             // 
-            this.button3.Location = new System.Drawing.Point(25, 193);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(116, 23);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "Get Average";
-            this.button3.UseVisualStyleBackColor = true;
+            this.GetAverage.Location = new System.Drawing.Point(25, 193);
+            this.GetAverage.Name = "GetAverage";
+            this.GetAverage.Size = new System.Drawing.Size(116, 23);
+            this.GetAverage.TabIndex = 4;
+            this.GetAverage.Text = "Get Average";
+            this.GetAverage.UseVisualStyleBackColor = true;
+            this.GetAverage.Click += new System.EventHandler(this.GetAverage_Click);
             // 
-            // button2
+            // GetMinValue
             // 
-            this.button2.Location = new System.Drawing.Point(25, 146);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(116, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Get Min Value";
-            this.button2.UseVisualStyleBackColor = true;
+            this.GetMinValue.Location = new System.Drawing.Point(25, 146);
+            this.GetMinValue.Name = "GetMinValue";
+            this.GetMinValue.Size = new System.Drawing.Size(116, 23);
+            this.GetMinValue.TabIndex = 3;
+            this.GetMinValue.Text = "Get Min Value";
+            this.GetMinValue.UseVisualStyleBackColor = true;
+            this.GetMinValue.Click += new System.EventHandler(this.GetMinValue_Click);
             // 
             // getMaxButton
             // 
@@ -294,18 +296,12 @@ namespace MathSample_HW1
         private System.Windows.Forms.TextBox avgTextBox;
         private System.Windows.Forms.TextBox minTextBox;
         private System.Windows.Forms.TextBox maxTextBox;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button GetAverage;
+        private System.Windows.Forms.Button GetMinValue;
         private System.Windows.Forms.Button getMaxButton;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox numListTextBox;
         private System.Windows.Forms.Button GenerateMultTable;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-
-        private void GetMaxValue(object sender, System.EventArgs e)
-        {
-
-        }
-
     }
 }

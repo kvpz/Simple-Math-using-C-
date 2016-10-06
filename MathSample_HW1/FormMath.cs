@@ -5,43 +5,22 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Linq; // Select
+using System.Collections;
 
 namespace MathSample_HW1
 {
     public partial class FormMath : Form
     {
+        //System.Collections.ArrayList numList;
+        decimal[] numList;
         public FormMath()
         {
             Console.WriteLine("In FormMath() Constructor");
             InitializeComponent();
             // this.IsMdiContainer = true;  //https://msdn.microsoft.com/en-us/library/system.windows.forms.form.ismdicontainer(v=vs.110).aspx
         }
-        /*
-        private void FormMath_MdiChildActivate(object sender, System.EventArgs e)
-        {
-            if (this.ActiveMdiChild == null)
-                tabForms.Visible = false; // If no child form, hide tabControl
-            else
-            {
-                this.ActiveMdiChild.WindowState = FormWindowState.Maximized; // Child form always maximized
 
-                // If child form is new and no has tabPage, create new tabPage
-                if (this.ActiveMdiChild.Tag == null)
-                {
-                    // Add a tabPage to tabControl with child form caption
-                    TabPage tp = new TabPage(this.ActiveMdiChild.Text);
-                    tp.Tag = this.ActiveMdiChild;
-                    tp.Parent = tabForms;
-                    tabForms.SelectedTab = tp;
-
-                    this.ActiveMdiChild.Tag = tp;
-                    this.ActiveMdiChild.FormClosed += new FormClosedEventHandler(ActiveMdiChild_FormClosed);
-                }
-
-                if (!tabForms.Visible) tabForms.Visible = true;
-            }
-        }
-        */
         private void ActiveMdiChild_FormClosed(object sender, FormClosedEventArgs e)
         {
             ((sender as Form).Tag as TabPage).Dispose();
@@ -111,5 +90,78 @@ namespace MathSample_HW1
         {
             this.MultTableText.Text = "";
         }
+
+        private void GetMaxValue(object sender, System.EventArgs e)
+        {
+            if(this.numListTextBox.Text != "")
+            {
+                try
+                {
+                    numList = this.numListTextBox.Text.Split(',', ' ').Select(n => Convert.ToDecimal(n)).ToArray();
+                }
+                catch(FormatException)
+                {
+                    this.maxTextBox.ForeColor = Color.Red;
+                    this.maxTextBox.Text = "Error: Only input integers";
+                    numList = null;
+                    
+                }
+                
+                if (numList != null)
+                {
+                    this.maxTextBox.ForeColor = Color.Black;
+                    Array.Sort(numList);
+                    this.maxTextBox.Text = numList[numList.Length-1].ToString();
+                }
+            }
+        }
+
+        private void GetMinValue_Click(object sender, System.EventArgs e)
+        {
+            if (this.numListTextBox.Text != "")
+            {
+                try
+                {
+                    numList = this.numListTextBox.Text.Split(',', ' ').Select(n => Convert.ToDecimal(n)).ToArray();
+                }
+                catch (FormatException)
+                {
+                    this.minTextBox.Text = "Error: Only input integers";
+                    this.minTextBox.ForeColor = Color.Red;
+                    numList = null;
+                }
+
+                if (numList != null)
+                {
+                    this.minTextBox.ForeColor = Color.Black;
+                    Array.Sort(numList);
+                    this.minTextBox.Text = numList[0].ToString(); //numList[0].ToString();
+                }
+            }
+        }
+
+        private void GetAverage_Click(object sender, System.EventArgs e)
+        {
+            if (this.numListTextBox.Text != "")
+            {
+                try
+                {
+                    numList = this.numListTextBox.Text.Split(',', ' ').Select(n => Convert.ToDecimal(n)).ToArray();
+                }
+                catch (FormatException)
+                {
+                    this.avgTextBox.Text = "Error: Only input integers";
+                    this.avgTextBox.ForeColor = Color.Red;
+                    numList = null;
+                }
+
+                if (numList != null)
+                {
+                    this.avgTextBox.ForeColor = Color.Black;
+                    this.avgTextBox.Text = (numList.Sum() / (decimal)numList.Length).ToString();
+                }
+            }
+        }
+
     }
 }
