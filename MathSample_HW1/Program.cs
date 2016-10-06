@@ -63,50 +63,17 @@ using PClass2;
 
 namespace MathSample_HW1
 {
-    // using PClass2;
     // aliases (can also be declared in global namespace). Closest thing to C++ typedef
-    // Note: PClass1.Polygon requires area() in children classes to not be overriden
     // using Polygon = PClass2.Polygon<double>; // Contains virtual area()
     // using Polygon = PClass3.Polygon;      // Abstract (Pure virtual in C++) implementation
 
     class Program 
     {
 
-        public Program()  // creating button
+        public Program()  
         {
-            Console.WriteLine("In Program() Constructor");
 
         }
-
-        /*
-        private void GetArea_Click(object sender, EventArgs e) // This event handler is created at runtime
-        {
-            Square<decimal> square = new Square<decimal>();
-            // check if null because else no new calculations will be displayed
-            if (ResultBox == null)
-            {
-                ResultBox = new TextBox();
-                ResultBox.Location = new Point(30, 150);
-                this.Controls.Add(ResultBox);
-            }
-            ResultBox.ForeColor = Color.Black;
-            decimal width, height;
-            bool wIsNumeric, hIsNumeric;
-            wIsNumeric = decimal.TryParse(WidthInputBox.Text, out width);
-            hIsNumeric = decimal.TryParse(HeightInputBox.Text, out height);
-            if (width <= 0 || height <= 0 || !wIsNumeric || !hIsNumeric)
-            {
-                ResultBox.Text = "Invalid input";
-                ResultBox.ForeColor = Color.Red;
-            }
-            else
-            {
-                square.width = width;
-                square.height = height;
-                ResultBox.Text = square.area().ToString();
-            }
-        }
-        */
 
         [STAThread]
         static void Main() 
@@ -171,12 +138,10 @@ namespace MathSample_HW1
                 parameters.ReferencedAssemblies.Add(reference);
 
             parameters.GenerateInMemory = true;
-            Console.WriteLine(full_code);
             CompilerResults results = new CSharpCodeProvider().CompileAssemblyFromSource(parameters, full_code);
 
             if(results.Errors.HasErrors)
             {
-                Console.WriteLine("In if(results.Errors.HasErrors");
                 string error = string.Empty;
                 foreach (CompilerError compiler_error in results.Errors)
                     error += compiler_error.ErrorText.ToString() + "\n";
@@ -236,6 +201,7 @@ namespace PClass2
     }
 }
 
+/*
 // Contains an abstract Polygon class
 namespace PClass3
 {
@@ -244,11 +210,10 @@ namespace PClass3
         public uint width { get; set; }
         public uint height { get; set; }
 
-        //public virtual double area() { return 0; } // if inheriting classes have their own definition
+        
         public abstract double area();
         public Polygon()
         {
-            //Console.WriteLine("In Polygon Constructor");
             width = 0;
             height = 0;
         }
@@ -259,23 +224,5 @@ namespace PClass3
             height = h;
         }
     }
-}
-
-
-
-
-// A compiler option to allow unsafe code must be provided.
-// mcs *.cs -out:main.exe -unsafe, or set "allow unsafe" in VS Project Properties.
-/*
-unsafe {
-    Square s;
-    Polygon* poly_square;
-    poly_square = &s;//new Square();
-    Polygon* poly_triangle = &triangle;
-    poly_square.width = 4;
-    poly_square.height = 4;
-    poly_triangle.width = 4;
-    poly_triangle.height = 4;
-    Console.WriteLine("Square area: {0}", )
 }
 */
