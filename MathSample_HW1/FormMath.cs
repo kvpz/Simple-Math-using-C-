@@ -82,5 +82,34 @@ namespace MathSample_HW1
             }
         }
 
+        private void GenerateMultTable_Click(object sender, System.EventArgs e)
+        {
+
+            uint n;
+            uint.TryParse(this.Nsize_text.Text, out n);
+            if (uint.TryParse(this.Nsize_text.Text, out n))
+            {
+                int largestDigit = (int)(n * n);
+
+                for (int i = 1; i < n + 1; ++i)
+                {
+                    for (int j = 1; j < n + 1; ++j)
+                    {
+                        this.MultTableText.AppendText((i * j).ToString() + ' ');
+                    }
+                    this.MultTableText.AppendText("\n");
+                }
+            }
+            else
+            {
+                this.MultTableText.Text = "Invalid input";
+                this.MultTableText.ForeColor = System.Drawing.Color.Red;
+            }
+        }
+
+        private void Nsize_text_TextChanged(object sender, System.EventArgs e)
+        {
+            this.MultTableText.Text = "";
+        }
     }
 }

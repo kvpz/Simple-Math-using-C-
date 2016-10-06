@@ -11,7 +11,7 @@ namespace MathSample_HW1
         // clean up resources
         protected override void Dispose(bool disposing)
         {
-            if(disposing && (components != null))
+            if (disposing && (components != null))
             {
                 components.Dispose();
             }
@@ -31,6 +31,7 @@ namespace MathSample_HW1
             this.heightBox = new System.Windows.Forms.TextBox();
             this.widthBox = new System.Windows.Forms.TextBox();
             this.MultiplicationTableTabPage = new System.Windows.Forms.TabPage();
+            this.GenerateMultTable = new System.Windows.Forms.Button();
             this.MultTableText = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.Nsize_text = new System.Windows.Forms.TextBox();
@@ -43,7 +44,6 @@ namespace MathSample_HW1
             this.getMaxButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.numListTextBox = new System.Windows.Forms.TextBox();
-            this.GenerateMultTable = new System.Windows.Forms.Button();
             this.tabForms.SuspendLayout();
             this.AreaCalculationsTabPage.SuspendLayout();
             this.MultiplicationTableTabPage.SuspendLayout();
@@ -73,7 +73,7 @@ namespace MathSample_HW1
             this.AreaCalculationsTabPage.Location = new System.Drawing.Point(4, 22);
             this.AreaCalculationsTabPage.Name = "AreaCalculationsTabPage";
             this.AreaCalculationsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.AreaCalculationsTabPage.Size = new System.Drawing.Size(671, 321);
+            this.AreaCalculationsTabPage.Size = new System.Drawing.Size(542, 321);
             this.AreaCalculationsTabPage.TabIndex = 0;
             this.AreaCalculationsTabPage.Text = "Area Calculations";
             this.AreaCalculationsTabPage.UseVisualStyleBackColor = true;
@@ -136,18 +136,30 @@ namespace MathSample_HW1
             this.MultiplicationTableTabPage.Location = new System.Drawing.Point(4, 22);
             this.MultiplicationTableTabPage.Name = "MultiplicationTableTabPage";
             this.MultiplicationTableTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.MultiplicationTableTabPage.Size = new System.Drawing.Size(671, 321);
+            this.MultiplicationTableTabPage.Size = new System.Drawing.Size(542, 321);
             this.MultiplicationTableTabPage.TabIndex = 1;
             this.MultiplicationTableTabPage.Text = "Multiplication Table";
             this.MultiplicationTableTabPage.UseVisualStyleBackColor = true;
+            // 
+            // GenerateMultTable
+            // 
+            this.GenerateMultTable.Location = new System.Drawing.Point(341, 24);
+            this.GenerateMultTable.Name = "GenerateMultTable";
+            this.GenerateMultTable.Size = new System.Drawing.Size(75, 23);
+            this.GenerateMultTable.TabIndex = 3;
+            this.GenerateMultTable.Text = "generate";
+            this.GenerateMultTable.UseVisualStyleBackColor = true;
+            this.GenerateMultTable.Click += new System.EventHandler(this.GenerateMultTable_Click);
             // 
             // MultTableText
             // 
             this.MultTableText.Location = new System.Drawing.Point(106, 69);
             this.MultTableText.Name = "MultTableText";
+            this.MultTableText.ReadOnly = true;
             this.MultTableText.Size = new System.Drawing.Size(293, 230);
             this.MultTableText.TabIndex = 2;
             this.MultTableText.Text = "";
+            this.MultTableText.WordWrap = false;
             // 
             // label3
             // 
@@ -164,6 +176,7 @@ namespace MathSample_HW1
             this.Nsize_text.Name = "Nsize_text";
             this.Nsize_text.Size = new System.Drawing.Size(100, 20);
             this.Nsize_text.TabIndex = 0;
+            this.Nsize_text.TextChanged += new System.EventHandler(this.Nsize_text_TextChanged);
             // 
             // MiscFunctions
             // 
@@ -248,15 +261,6 @@ namespace MathSample_HW1
             this.numListTextBox.Size = new System.Drawing.Size(478, 20);
             this.numListTextBox.TabIndex = 0;
             // 
-            // GenerateMultTable
-            // 
-            this.GenerateMultTable.Location = new System.Drawing.Point(341, 24);
-            this.GenerateMultTable.Name = "GenerateMultTable";
-            this.GenerateMultTable.Size = new System.Drawing.Size(75, 23);
-            this.GenerateMultTable.TabIndex = 3;
-            this.GenerateMultTable.Text = "generate";
-            this.GenerateMultTable.UseVisualStyleBackColor = true;
-            // 
             // FormMath
             // 
             this.ClientSize = new System.Drawing.Size(550, 361);
@@ -300,7 +304,8 @@ namespace MathSample_HW1
 
         private void GetMaxValue(object sender, System.EventArgs e)
         {
-            
+
         }
+
     }
 }

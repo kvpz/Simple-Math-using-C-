@@ -40,6 +40,8 @@
  * 
  * Features I'd like to implement:
  * https://msdn.microsoft.com/en-us/library/xyhh2e7e(v=vs.110).aspx
+ * 
+ * No implicit conversion is allowed in c#
  */
 
 using System;
