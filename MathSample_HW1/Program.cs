@@ -61,7 +61,7 @@ using System.Windows.Forms;
 using PClass2;
 // using PClass3;
 
-namespace MathSample_HW1
+namespace MathProgram
 {
     // aliases (can also be declared in global namespace). Closest thing to C++ typedef
     // using Polygon = PClass2.Polygon<double>; // Contains virtual area()
@@ -69,7 +69,6 @@ namespace MathSample_HW1
 
     class Program 
     {
-
         public Program()  
         {
 
@@ -80,7 +79,7 @@ namespace MathSample_HW1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMath()); //Program());
+            Application.Run(new MainForm()); //Program());
         }
     } // class Program
 

@@ -1,9 +1,9 @@
 ﻿/* update 10/5/16
  * I created this file manually. 
  */ 
-namespace MathSample_HW1
+namespace MathProgram
 {
-    partial class FormMath
+    partial class MainForm
     {
         // required designer variable
         private System.ComponentModel.IContainer components = null;
@@ -44,6 +44,7 @@ namespace MathSample_HW1
             this.getMaxButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.numListTextBox = new System.Windows.Forms.TextBox();
+            this.HomePage = new System.Windows.Forms.TabPage();
             this.tabForms.SuspendLayout();
             this.AreaCalculationsTabPage.SuspendLayout();
             this.MultiplicationTableTabPage.SuspendLayout();
@@ -52,6 +53,7 @@ namespace MathSample_HW1
             // 
             // tabForms
             // 
+            this.tabForms.Controls.Add(this.HomePage);
             this.tabForms.Controls.Add(this.AreaCalculationsTabPage);
             this.tabForms.Controls.Add(this.MultiplicationTableTabPage);
             this.tabForms.Controls.Add(this.MiscFunctions);
@@ -149,7 +151,7 @@ namespace MathSample_HW1
             this.GenerateMultTable.TabIndex = 3;
             this.GenerateMultTable.Text = "generate";
             this.GenerateMultTable.UseVisualStyleBackColor = true;
-            this.GenerateMultTable.Click += new System.EventHandler(this.GenerateMultTable_Click);
+            this.GenerateMultTable.Click += new System.EventHandler(this.GenerateMultiplicationTable_Click);
             // 
             // MultTableText
             // 
@@ -263,12 +265,23 @@ namespace MathSample_HW1
             this.numListTextBox.Size = new System.Drawing.Size(478, 20);
             this.numListTextBox.TabIndex = 0;
             // 
-            // FormMath
+            // HomePage
+            // 
+            this.HomePage.Location = new System.Drawing.Point(4, 22);
+            this.HomePage.Name = "Home";
+            this.HomePage.Padding = new System.Windows.Forms.Padding(3);
+            this.HomePage.Size = new System.Drawing.Size(542, 321);
+            this.HomePage.TabIndex = 3;
+            this.HomePage.Text = "Home";
+            this.HomePage.UseVisualStyleBackColor = true;
+            // 
+            // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(550, 361);
             this.Controls.Add(this.tabForms);
-            this.Name = "FormMath";
-            this.Text = "C# Programming Assignment 1";
+            this.Name = "MainForm";
+            this.Text = "Math Review 0.1";
+            this.Load += new System.EventHandler(this.FormMath_Load);
             this.tabForms.ResumeLayout(false);
             this.AreaCalculationsTabPage.ResumeLayout(false);
             this.AreaCalculationsTabPage.PerformLayout();
@@ -302,6 +315,12 @@ namespace MathSample_HW1
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox numListTextBox;
         private System.Windows.Forms.Button GenerateMultTable;
+        private System.Windows.Forms.TabPage HomePage;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+
+        private void FormMath_Load(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }

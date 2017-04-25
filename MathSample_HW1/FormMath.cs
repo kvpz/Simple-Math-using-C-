@@ -8,15 +8,13 @@ using System.Windows.Forms;
 using System.Linq; // Select
 using System.Collections;
 
-namespace MathSample_HW1
+namespace MathProgram
 {
-    public partial class FormMath : Form
+    public partial class MainForm : Form
     {
-        //System.Collections.ArrayList numList;
         decimal[] numList;
-        public FormMath()
+        public MainForm()
         {
-            Console.WriteLine("In FormMath() Constructor");
             InitializeComponent();
             // this.IsMdiContainer = true;  //https://msdn.microsoft.com/en-us/library/system.windows.forms.form.ismdicontainer(v=vs.110).aspx
         }
@@ -61,9 +59,8 @@ namespace MathSample_HW1
             }
         }
 
-        private void GenerateMultTable_Click(object sender, System.EventArgs e)
+        private void GenerateMultiplicationTable_Click(object sender, System.EventArgs e)
         {
-
             uint n;
             uint.TryParse(this.Nsize_text.Text, out n);
             if (uint.TryParse(this.Nsize_text.Text, out n))
@@ -126,7 +123,7 @@ namespace MathSample_HW1
                 }
                 catch (FormatException)
                 {
-                    this.minTextBox.Text = "Error: Only input integers";
+                    this.minTextBox.Text = "Error: Only integers are allows as input.";
                     this.minTextBox.ForeColor = Color.Red;
                     numList = null;
                 }
